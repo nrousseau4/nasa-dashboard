@@ -68,6 +68,14 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
         line-height: 40px;
         width: 100%;
       }
+      a {
+        text-decoration: none;
+        color: blue;
+      }
+      a:visited {
+        text-decoration: none;
+        color: blue;
+      }
     `;
   }
 
@@ -112,10 +120,10 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
       </details>
       <div class="results">
         ${this.items.map((item, index) => html`
-        <nasa-image
+        <a href="${item.links[0].href}" target="_blank"><nasa-image
           source="${item.links[0].href}"
           title="${item.data[0].title}"
-        ></nasa-image>
+        ></nasa-image></a>
         `)}
       </div>
     `;

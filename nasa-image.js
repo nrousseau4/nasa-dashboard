@@ -17,32 +17,36 @@ export class NasaImage extends LitElement {
 
   static get styles() {
     return [css`
-    
-
+  
     .image {
-    display: inline-block;
+      display: inline-block;
     }
 
     .image div {
-    max-width: 200px;
-    font-size: 16px;
-    font-weight: bold;
+      width: 240px;
+      height: 240px;
+      font-size: 16px;
+      font-weight: bold;
+      border: black;
     }
 
     .image img {
-    display: block;
-    width: 200px;
-    height: 200px;
+      height: 180px;
+      width: 180px;
+      display: block;
     }
 
+    a {
+      text-decoration: none;
+    }
     `];
   }
 
   render() {
     return html`
     <div class="image">
-        <img src="${this.source}" />
-        <div>${this.title}</div>
+        <img src="${this.source}"/>
+        <div class="title">${this.title}</div>
     </div>
     `;
   }
