@@ -25,7 +25,6 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
     this.items = [];
   };
 
-  // Lit reactive properties
   static get properties() {
     return {
       title: { type: String },
@@ -35,7 +34,6 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
     };
   }
 
-  // Lit scoped styles
   static get styles() {
     return css`
       :host {
@@ -71,6 +69,35 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
         width: 100%;
       }
     `;
+  }
+
+  inputChanged(e) {
+    this.value = this.shadowRoot.querySelector('#input').value;
+  }
+  // life cycle will run when anything defined in `properties` is modified
+  updated(changedProperties) {
+    // see if value changes from user input and is not empty
+    if (changedProperties.has('value') && this.value) {
+      this.updateResults(this.value);
+    }
+    else if (changedProperties.has('value') && !this.value) {
+      this.items = [];
+    }
+    // @debugging purposes only
+    if (changedProperties.has('items') && this.items.length > 0) {
+      console.log(this.items);
+    }
+  }
+
+  updateResults(value) {
+    this.loading = true;
+    fetch(`https://images-api.nasa.gov/search?media_type=image&q=${value}`).then(d => d.ok ? d.json(): {}).then(data => {
+      if (data.collection) {
+        this.items = [];
+        this.items = data.collection.items;
+        this.loading = false;
+      }  
+    });
   }
 
   // Lit render the HTML
