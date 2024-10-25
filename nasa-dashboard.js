@@ -20,14 +20,12 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
   constructor() {
     super();
     this.value = null;
-    this.title = '';
     this.loading = false;
     this.items = [];
   };
 
   static get properties() {
     return {
-      title: { type: String },
       loading: { type: Boolean, reflect: true },
       items: { type: Array, },
       value: { type: String },
@@ -36,14 +34,17 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
 
   static get styles() {
     return css`
+
       :host {
         display: block;
+        font-family: var(--ddd-font-primary)
       }
       :host([loading]) .results {
         opacity: 0.1;
         visibility: hidden;
         height: 1px;
       }
+
       .results {
         visibility: visible;
         height: 100%;
@@ -53,29 +54,33 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
       }
 
       details {
-        margin: 16px;
-        padding: 16px;
-        background-color: blue;
+        margin: var(--ddd-spacing-4);
+        padding: var(--ddd-spacing-4);
+        background-color: var(--ddd-theme-default-beaverBlue);
       }
+
       summary {
         font-size: 24px;
-        padding: 8px;
-        color: white;
+        padding: var(--ddd-spacing-2);
+        color: var(--ddd-theme-default-white);
         font-size: 42px;
       }
+
       input {
         font-size: 20px;
-        line-height: 40px;
+        line-height: var(--ddd-spacing-10);
         width: 100%;
       }
+
       a {
         text-decoration: none;
-        color: blue;
+        color: var(--ddd-theme-default-link);
       }
       a:visited {
         text-decoration: none;
-        color: blue;
+        color: var(--ddd-theme-default-link);
       }
+
     `;
   }
 
@@ -111,7 +116,6 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
   // Lit render the HTML
   render() {
     return html`
-      <h2>${this.title}</h2>
       <details open>
         <summary>Search inputs</summary>
         <div>
@@ -120,10 +124,14 @@ export class nasaDashboard extends DDDSuper(I18NMixin(LitElement)) {
       </details>
       <div class="results">
         ${this.items.map((item, index) => html`
-        <a href="${item.links[0].href}" target="_blank"><nasa-image
-          source="${item.links[0].href}"
-          title="${item.data[0].title}"
-        ></nasa-image></a>
+        <a href="${item.links[0].href}" target="_blank">
+          <nasa-image
+            source="${item.links[0].href}"
+            alt="${item.data[0].description}"
+            title="${item.data[0].title}"
+            desc="By: ${item.data[0].secondary_creator}"
+          ></nasa-image>
+        </a>
         `)}
       </div>
     `;

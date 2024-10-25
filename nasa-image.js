@@ -6,47 +6,66 @@ export class NasaImage extends LitElement {
     super();
     this.title = '';
     this.source = '';
+    this.alt = '';
+    this.desc = '';
   }
 
   static get properties() {
     return {
         source: { type: String },
         title: { type: String },
+        alt: { type : String },
+        desc: { type : String }
     };
   }
 
   static get styles() {
     return [css`
-  
-    .image {
-      display: inline-block;
-    }
 
-    .image div {
-      width: 240px;
-      height: 240px;
-      font-size: 16px;
-      font-weight: bold;
-      border: black;
-    }
+      div {
+        width: 240px;
+        height: 300px;
+        font-size: 16px;
+        font-weight: bold;
+        border: black;
+      }
+      div:hover {
+        background-color: var(--ddd-theme-default-keystoneYellow);
+      }
 
-    .image img {
-      height: 180px;
-      width: 180px;
-      display: block;
-    }
+      .card {
+        display: inline-grid;
+      }
 
-    a {
-      text-decoration: none;
-    }
+      .title {
+        height: var(--ddd-spacing-10);
+        text-align: center;
+      }
+
+      .desc {
+        height: var(--ddd-spacing-20);
+        text-align: center;
+      }
+
+      img {
+        width: 240px;
+        height: 180px;
+        display: block;
+      }
+
+      a {
+        text-decoration: none;
+      }
+      
     `];
   }
 
   render() {
     return html`
-    <div class="image">
-        <img src="${this.source}"/>
+    <div class="card">
+        <img src="${this.source}" alt="${this.alt}"/>
         <div class="title">${this.title}</div>
+        <div class="desc">${this.desc}</div>
     </div>
     `;
   }
